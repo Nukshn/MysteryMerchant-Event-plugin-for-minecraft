@@ -1,0 +1,26 @@
+name: MysteryMerchant
+version: 1.0
+main: ua.nukshn.mysterymerchant.MysteryMerchant
+api-version: 1.17
+author: YourName
+softdepend: [Vault, EssentialsX]
+commands:
+  mysterymerchant:
+    description: Main command for Mystery Merchant
+    usage: /mysterymerchant reload
+  mmspawn:
+    description: Spawn the mystery merchant
+    usage: /mmspawn
+  mmremove:
+    description: Remove the mystery merchant from the map
+    usage: /mmremove
+permissions:
+  mysterymerchant.spawn:
+    description: Allows spawning the mystery merchant
+    default: op
+  mysterymerchant.reload:
+    description: Allows reloading config
+    default: op
+  mysterymerchant.tp:
+    description: Allows clicking spawn message coordinates to teleport
+    default: op

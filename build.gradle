@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group = 'com.MysteryMerchant'
+version = '1.0'
+description = 'MysteryMerchant Plugin'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+    maven { url = uri('https://hub.spigotmc.org/nexus/content/repositories/snapshots/') }
+    maven { url = uri('https://repo.papermc.io/repository/maven-public/') }
+    maven { url = uri('https://jitpack.io') }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'
+    compileOnly 'com.github.MilkBowl:VaultAPI:1.7'
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    filesMatching('**/*.yml') {
+        expand(version: version)
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+// Regular jar: only project classes + resources (no dependencies); shadowJar will build fat jar
+jar {
+    archiveFileName = "MysteryMerchant-${version}.jar"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+shadowJar {
+    archiveFileName = "MysteryMerchant-${version}.jar"
+    minimize()
+}
+
+// Ensure shadowJar runs on build
+tasks.named('build') {
+    dependsOn shadowJar
+}
+
+// Wrapper configuration (generate with: gradle wrapper --gradle-version 7.6.4)
+tasks.wrapper {
+    gradleVersion = '7.6.4'
+    distributionType = Wrapper.DistributionType.BIN
+}

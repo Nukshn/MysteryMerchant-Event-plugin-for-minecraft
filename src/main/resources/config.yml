@@ -1,0 +1,65 @@
+# Mystery Merchant Configuration
+
+# Merchant settings
+merchant-name: "&#FCFF00&lТ&#FAFF00&lо&#F9FF00&lр&#F7FF00&lг&#F6FF00&lо&#F4FF00&lв&#F3FF00&lе&#F1FF00&lц"
+merchant-profession: "NITWIT"
+merchant-type: "SWAMP"
+
+# Spawn settings
+spawn-radius: 30
+spawn-attempts: 50
+# Интервал между автоматическими появлениями (в тиках; 20 тиков = 1 секунда). 108000 тиков = 1.5 часа
+spawn-interval: 108000
+# Через сколько секунд после появления торговец исчезнет (по умолчанию 900 = 15 минут)
+despawn-seconds: 900
+
+# Spawn message (используйте %x %y %z для координат и %time% для форматированного времени до исчезновения)
+spawn-message: "&#FCFF00&lТ&#FBFF00&lа&#FBFF00&lи&#FAFF00&lн&#FAFF00&lс&#F9FF00&lт&#F9FF00&lв&#F8FF00&lе&#F8FF00&lн&#F7FF00&lн&#F7FF00&lы&#F6FF00&lй &#F5FF00&lТ&#F4FF00&lо&#F4FF00&lр&#F3FF00&lг&#F3FF00&lо&#F2FF00&lв&#F2FF00&lе&#F1FF00&lц§7Появился на координатах: §e[%x; %y; %z]"
+
+# GUI title
+gui-title: "&#FCFF00&lТ&#FBFF00&lа&#FBFF00&lи&#FAFF00&lн&#FAFF00&lс&#F9FF00&lт&#F9FF00&lв&#F8FF00&lе&#F8FF00&lн&#F7FF00&lн&#F7FF00&lы&#F6FF00&lй &#F5FF00&lт&#F4FF00&lо&#F4FF00&lр&#F3FF00&lг&#F3FF00&lо&#F2FF00&lв&#F2FF00&lе&#F1FF00&lц"
+
+# Particle settings
+particles:
+  enabled: true
+  type: "ENCHANTMENT_TABLE"
+  interval-ticks: 10
+  count: 8
+  radius: 0.6
+
+# Звуки при спавне (проигрываются всем игрокам)
+sounds:
+  spawn:
+    - sound: "ENTITY_ILLUSIONER_PREPARE_MIRROR"
+      volume: 1.2
+      pitch: 1.0
+    - sound: "ENTITY_VILLAGER_AMBIENT"
+      volume: 1.2
+      pitch: 1.2
+    - sound: "UI_TOAST_CHALLENGE_COMPLETE"
+      volume: 1.0
+      pitch: 1.0
+
+# Items for sale (limit: -1 = бесконечно)
+items:
+  diamond:
+    material: "DIAMOND"
+    price: 1000
+    limit: 5
+    name: "§bВолшебный Алмаз"
+    lore:
+      - "§7Магический алмаз невероятной силы"
+  apple:
+    material: "ENCHANTED_GOLDEN_APPLE"
+    price: 500
+    limit: 3
+    name: "§6Золотое Яблоко Силы"
+    lore:
+      - "§7Дарует невероятную силу"
+  elytra:
+    material: "ELYTRA"
+    price: 2000
+    limit: 1
+    name: "§dКрылья Тьмы"
+    lore:
+      - "§7Крылья из самого сердца эндера"
