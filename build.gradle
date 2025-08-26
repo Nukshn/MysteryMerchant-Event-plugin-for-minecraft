@@ -20,14 +20,16 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'
+    // Компилируемся против самой новой версии API для форвард-совместимости (плагин использует только стабильные части со времён 1.17)
+    compileOnly 'org.spigotmc:spigot-api:1.21.1-R0.1-SNAPSHOT'
     compileOnly 'com.github.MilkBowl:VaultAPI:1.7'
 }
 
 processResources {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
-    filesMatching('**/*.yml') {
-        expand(version: version)
+    // Only expand plugin.yml to inject version if needed; avoid expanding all yml (language files with $)
+    filesMatching('plugin.yml') {
+        expand(version: project.version)
     }
 }
 

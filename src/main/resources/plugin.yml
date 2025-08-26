@@ -14,6 +14,9 @@ commands:
   mmremove:
     description: Remove the mystery merchant from the map
     usage: /mmremove
+  mmresetlimits:
+    description: Reset purchase limits for all players
+    usage: /mmresetlimits
 permissions:
   mysterymerchant.spawn:
     description: Allows spawning the mystery merchant
@@ -23,4 +26,7 @@ permissions:
     default: op
   mysterymerchant.tp:
     description: Allows clicking spawn message coordinates to teleport
+    default: op
+  mysterymerchant.resetlimits:
+    description: Allows resetting merchant purchase limits
     default: op

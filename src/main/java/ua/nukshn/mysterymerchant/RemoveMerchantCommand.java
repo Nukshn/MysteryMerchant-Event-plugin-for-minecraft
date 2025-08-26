@@ -8,8 +8,7 @@ public class RemoveMerchantCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         MysteryMerchant.getInstance().getSpawnTask().removeMerchant();
-        sender.sendMessage("§cТорговец удалён с карты!");
+        sender.sendMessage(Language.tr("remove.done"));
         return true;
     }
 }
-

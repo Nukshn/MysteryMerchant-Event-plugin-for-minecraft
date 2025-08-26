@@ -17,8 +17,8 @@ import java.util.HashMap;
 
 public class MerchantListener implements Listener {
 
-    private static final String NEW_NAME = "§6§lТаинственный Торговец";
-    private static final String OLD_NAME = "§6§lПластический синдрю"; // на случай старых сущностей
+    private static final String NEW_NAME = "§6§lТаинственный Торговец"; // legacy fallback
+    private static final String OLD_NAME = "§6§lПластический синдрю"; // legacy fallback
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEntityEvent event) {
@@ -33,7 +33,7 @@ public class MerchantListener implements Listener {
         if (!isMerchant) {
             String name = villager.getCustomName();
             if (name != null && (name.equals(NEW_NAME) || name.equals(OLD_NAME))) {
-                isMerchant = true; // fallback по имени
+                isMerchant = true; // fallback by name
             }
         }
         if (!isMerchant) return;
@@ -43,7 +43,6 @@ public class MerchantListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        // Подключившемуся игроку показываем текущий боссбар, если торговец ещё активен
         MysteryMerchant plugin = MysteryMerchant.getInstance();
         if (plugin != null) {
             SpawnTask task = plugin.getSpawnTask();
@@ -68,29 +67,29 @@ public class MerchantListener implements Listener {
         int limit = MerchantGUI.getLimit(current);
         PurchaseManager pm = MysteryMerchant.getInstance().getPurchaseManager();
         if (limit >= 0 && !pm.canBuy(player.getUniqueId(), itemId, limit)) {
-            player.sendMessage("§cВы достигли лимита покупок для этого предмета.");
+            player.sendMessage(Language.tr("purchase.limit-reached"));
             player.playSound(player.getLocation(), org.bukkit.Sound.ENTITY_VILLAGER_NO, 1f, 0.8f);
             return;
         }
 
         Economy eco = MysteryMerchant.getInstance().getEconomy();
         if (eco == null) {
-            player.sendMessage("§cЭкономика не настроена (Vault не найден). Покупка невозможна.");
+            player.sendMessage(Language.tr("purchase.economy-missing"));
             return;
         }
         int price = MerchantGUI.getPrice(current);
         if (price <= 0) {
-            player.sendMessage("§cОшибка: цена не задана.");
+            player.sendMessage(Language.tr("purchase.price-missing"));
             return;
         }
         if (!eco.has(player, price)) {
-            player.sendMessage("§cНедостаточно средств. Нужно: §e" + price + "$");
+            player.sendMessage(Language.tr("purchase.not-enough", "price", String.valueOf(price)));
             player.playSound(player.getLocation(), org.bukkit.Sound.ENTITY_VILLAGER_NO, 1f, 1f);
             return;
         }
         var resp = eco.withdrawPlayer(player, price);
         if (!resp.transactionSuccess()) {
-            player.sendMessage("§cОшибка списания средств: " + resp.errorMessage);
+            player.sendMessage(Language.tr("purchase.withdraw-fail", "error", String.valueOf(resp.errorMessage)));
             return;
         }
         ItemStack reward = new ItemStack(current);
@@ -98,17 +97,15 @@ public class MerchantListener implements Listener {
         HashMap<Integer, ItemStack> leftover = player.getInventory().addItem(reward);
         if (!leftover.isEmpty()) leftover.values().forEach(is -> player.getWorld().dropItemNaturally(player.getLocation(), is));
         pm.recordBuy(player.getUniqueId(), itemId);
-        player.sendMessage("§aПокупка успешна! Списано §e" + price + "$§a.");
+        player.sendMessage(Language.tr("purchase.success", "price", String.valueOf(price)));
         player.playSound(player.getLocation(), org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.7f, 1.2f);
-        // Обновляем GUI, чтобы показать оставшийся лимит
-        MerchantGUI.openMerchantGUI(player);
+        MerchantGUI.openMerchantGUI(player); // refresh
     }
 
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent event) {
         if (event.getView().getTitle() == null) return;
         if (!MerchantGUI.isGuiTitle(event.getView().getTitle())) return;
-        // Ничего нельзя перетаскивать
         event.setCancelled(true);
     }
 }

@@ -1,5 +1,11 @@
 # Mystery Merchant Configuration
 
+# Language (available: en, ru, uk, de, fr)
+language: ru
+
+# Remove any leftover merchants from previous sessions on startup
+cleanup-on-start: true
+
 # Merchant settings
 merchant-name: "&#FCFF00&lТ&#FAFF00&lо&#F9FF00&lр&#F7FF00&lг&#F6FF00&lо&#F4FF00&lв&#F3FF00&lе&#F1FF00&lц"
 merchant-profession: "NITWIT"

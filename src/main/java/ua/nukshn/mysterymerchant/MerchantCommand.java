@@ -12,15 +12,15 @@ public class MerchantCommand implements CommandExecutor {
             if (sender.hasPermission("mysterymerchant.reload")) {
                 MysteryMerchant plugin = MysteryMerchant.getInstance();
                 plugin.reloadConfig();
-                // Перезапускаем задачу спавна с новым интервалом
+                Language.init(plugin.getConfig().getString("language", "en"));
                 plugin.rescheduleSpawnTask();
-                sender.sendMessage("§aКонфиг перезагружен! Интервал и настройки обновлены.");
+                sender.sendMessage(Language.tr("command.reload.done"));
                 return true;
             }
-            sender.sendMessage("§cНет прав.");
+            sender.sendMessage(Language.tr("command.reload.no-permission"));
             return true;
         }
-        sender.sendMessage("Использование: /mysterymerchant reload");
+        sender.sendMessage(Language.tr("command.reload.usage"));
         return true;
     }
 }
