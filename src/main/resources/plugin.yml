@@ -2,7 +2,7 @@ name: MysteryMerchant
 version: 1.0
 main: ua.nukshn.mysterymerchant.MysteryMerchant
 api-version: 1.17
-author: YourName
+author: Nukshn
 softdepend: [Vault, EssentialsX]
 commands:
   mysterymerchant:
